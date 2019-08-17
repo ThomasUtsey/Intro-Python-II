@@ -1,4 +1,5 @@
 from room import Room
+from item import Item
 from player import Player
 
 # Declare all the rooms
@@ -22,23 +23,18 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-# Link rooms together
+item = {
+    '1': Item("Lighted Torch", " A torch is found on the wall with a flame alit showing the room only leaving the far corners shadowed in darkness."),
+    '2': Item("mana", "food as good as the day is new how it got there who knows."),
+    '3': Item("gold", "a few coins abandoned at the behest of god knows what"),
+    '4': Item("regents", "a collection of curious powders, roots and other odd unspeakables"),
+    '5': Item("flask", "a firmented unknown fluid smells of an intoxicating odor as in aged whiskey"),
+    '6': Item("note", "a blood smeared note written in haste it says 'THEYRE HERE MUST GET HELP!!'")
+}
 
-# room['outside'].n_to = room['foyer']
-# room['foyer'].s_to = room['outside']
-# room['foyer'].n_to = room['overlook']
-# room['foyer'].e_to = room['narrow']
-# room['overlook'].s_to = room['foyer']
-# room['narrow'].w_to = room['foyer']
-# room['narrow'].n_to = room['treasure']
-# room['treasure'].s_to = room['narrow']
-
-#
-# Main
-#
 
 # Make a new player object that is currently in the 'outside' room.
-character_name = input("Choose your adveturers name:")
+character_name = input("Choose your adventurers name:")
 player = Player(character_name, room['outside'])
 print(player)
 direction = ""
@@ -47,83 +43,144 @@ while player.lives == True:
     # -----------------outside-------------------------
 
     if player.location == room['outside']:
-        direction = input('choose a direction ( n q to quit ):')
+        Room.item = item['1']
+        print(Room.item)
+        item_collect = item['1'].name
+        direction = input(
+            'choose an option: \n press n to travel north\n press g to grab item in room\n press a to view character status and items carried\n press d to drop an item\n press q to quit\n:')
         if direction == "n":
             player.location = room['foyer']
-            print(player)
+            print(f"{player.char_name} has entered the {player.location}")
+
         if direction == "q":
             print(f"{player.char_name} leaves the adventure")
             player.lives = False
+        if direction == "g":
+            grab_item = input("Which item would thou like to grab?")
+            if grab_item == item_collect:
+                print(f"You have obtained the {item_collect}")
+                player.item.append(item_collect)
 
+        if direction == "a":
+            print(f"Items:{player.item}")
+
+        if direction == "d":
+            drop_item = input("which item would you like to drop?")
+            for it in player.item:
+                if drop_item == it:
+                    player.item.remove(it)
     # -----------------foyer-------------------------
 
     if player.location == room['foyer']:
-        direction = input('choose a direction ( s n e or q to quit ):')
+        Room.item = item['2']
+        item_collect = item['2'].name
+        print(Room.item)
+        direction = input('choose an option \n press s to travel south \n press n to travel north \n press e to travel east \n press g to grab item in room\n press a to view character status and items carried\n press d to drop an item\n press q to quit\n:')
         if direction == "s":
             player.location = room['outside']
-            print(player)
+            print(f"{player.char_name} has entered the {player.location}")
         if direction == "n":
             player.location = room['overlook']
             print(player)
         if direction == "e":
             player.location = room['narrow']
-            print(player)
+            print(f"{player.char_name} has entered the {player.location}")
         if direction == "q":
             print(f"{player.char_name} leaves the adventure")
             player.lives = False
+        if direction == "g":
+            grab_item = input("Which item would thou like to grab?")
+            if grab_item == item_collect:
+                print(f"You have obtained the {item_collect}")
+                player.item.append(item_collect)
+        if direction == "a":
+            print(f"Items:{player.item}")
+        if direction == "d":
+            drop_item = input("which item would you like to drop?")
+            for it in player.item:
+                if drop_item == it:
+                    player.item.remove(it)
 
     # -----------------overlook-------------------------
 
     if player.location == room['overlook']:
-        direction = input('choose a direction ( s or q to quit ):')
+        Room.item = item['3']
+        item_collect = item['3'].name
+        print(Room.item)
+        direction = input(
+            'choose an option: \n press s to travel south\n press g to grab item in room\n press a to view character status and items carried\n q to quit:')
         if direction == "s":
             player.location = room['foyer']
-            print(player)
+            print(f"{player.char_name} has entered the {player.location}")
         if direction == "q":
             print(f"{player.char_name} leaves the adventure")
             player.lives = False
+        if direction == "g":
+            grab_item = input("Which item would thou like to grab?")
+            if grab_item == item_collect:
+                print(f"You have obtained the {item_collect}")
+                player.item.append(item_collect)
+        if direction == "a":
+            print(f"Items:{player.item}")
+        if direction == "d":
+            drop_item = input("which item would you like to drop?")
+            for it in player.item:
+                if drop_item == it:
+                    player.item.remove(it)
 
     # -----------------narrow-------------------------
 
     if player.location == room['narrow']:
-        direction = input('choose a direction ( w, n or q to quit ):')
+        Room.item = item['4']
+        item_collect = item['4'].name
+        print(Room.item)
+        direction = input(
+            'choose an option: \n press w to travel west\n press n to travel north\n press g to grab item in room\n press a to view character status and items carried\n press d to drop an item\n press q to quit\n:')
         if direction == "w":
             player.location = room['foyer']
-            print(player)
+            print(f"{player.char_name} has entered the {player.location}")
         if direction == "n":
             player.location = room['treasure']
-            print(player)
+            print(f"{player.char_name} has entered the {player.location}")
         if direction == "q":
             print(f"{player.char_name} leaves the adventure")
             player.lives = False
+        if direction == "g":
+            grab_item = input("Which item would thou like to grab?")
+            if grab_item == item_collect:
+                print(f"You have obtained the {item_collect}")
+                player.item.append(item_collect)
+        if direction == "a":
+            print(f"Items:{player.item}")
+        if direction == "d":
+            drop_item = input("which item would you like to drop?")
+            for it in player.item:
+                if drop_item == it:
+                    player.item.remove(it)
 
     # -----------------treasure-------------------------
 
     if player.location == room['treasure']:
-        direction = input('choose a direction ( s or q to quit ):')
+        Room.item = item['5']
+        item_collect = item['5'].name
+        print(Room.item)
+        direction = input(
+            'choose an option: \n press s to travel south\n press g to grab item in room\n press a to view character status and items carried\n press d to drop an item\n press q to quit\n:')
         if direction == "s":
             player.location = room['narrow']
-            print(player)
+            print(f"{player.char_name} has entered the {player.location}")
         if direction == "q":
             print(f"{player.char_name} leaves the adventure")
             player.lives = False
-
-# while direction != "n" or direction != "q":
-#     direction = input('choose a direction ( n, s, e, w or q to quit ):')
-#     if direction == "n":
-#         player.location = room['foyer']
-#         print(player)fa
-#     if direction == "q":
-#         print(f"{player.char_name} leaves the adventure")
-
-
-# Write a loop that:
-#
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# t
+        if direction == "g":
+            grab_item = input("Which item would thou like to grab?")
+            if grab_item == item_collect:
+                print(f"You have obtained the {item_collect}")
+                player.item.append(item_collect)
+        if direction == "a":
+            print(f"Items:{player.item}")
+        if direction == "d":
+            drop_item = input("which item would you like to drop?")
+            for it in player.item:
+                if drop_item == it:
+                    player.item.remove(it)
